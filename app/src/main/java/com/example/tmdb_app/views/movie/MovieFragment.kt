@@ -11,6 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
+import com.example.tmdb_app.MainActivity
 import com.example.tmdb_app.databinding.FragmentMovieBinding
 import kotlinx.coroutines.launch
 
@@ -36,6 +37,9 @@ class MovieFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val actionBar = (activity as MainActivity).supportActionBar
+        actionBar?.setDisplayHomeAsUpEnabled(true)
 
         val movieId = arguments?.getInt("movieId") ?: 0
 

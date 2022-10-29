@@ -1,16 +1,17 @@
 package com.example.tmdb_app.views.movies
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.example.tmdb_app.MainActivity
 import com.example.tmdb_app.adapters.MoviesAdapter
 import com.example.tmdb_app.databinding.FragmentMoviesBinding
 import kotlinx.coroutines.launch
@@ -22,6 +23,7 @@ class MoviesFragment : Fragment() {
     private lateinit var adapter: MoviesAdapter
 
     private var _binding: FragmentMoviesBinding? = null
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -37,6 +39,9 @@ class MoviesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val actionBar = (activity as MainActivity).supportActionBar
+        actionBar?.setDisplayHomeAsUpEnabled(true)
 
         val genreId = arguments?.getInt("genreId") ?: 0
 
@@ -62,7 +67,7 @@ class MoviesFragment : Fragment() {
             }
         }
 
-        adapter = MoviesAdapter{ movie ->
+        adapter = MoviesAdapter { movie ->
             val action = MoviesFragmentDirections.actionMoviesFragmentToMovieFragment(movie.id)
             findNavController().navigate(action)
         }

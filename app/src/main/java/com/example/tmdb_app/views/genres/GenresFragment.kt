@@ -11,7 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.tmdb_app.R
+import com.example.tmdb_app.MainActivity
 import com.example.tmdb_app.adapters.GenresAdapter
 import com.example.tmdb_app.databinding.FragmentGenresBinding
 import kotlinx.coroutines.launch
@@ -31,7 +31,7 @@ class GenresFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentGenresBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -70,5 +70,10 @@ class GenresFragment : Fragment() {
         recyclerView.adapter = adapter
 
         viewModel.getGenres()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 }
