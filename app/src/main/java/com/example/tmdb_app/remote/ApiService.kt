@@ -10,6 +10,8 @@ object ApiService {
     private const val URL = "https://api.themoviedb.org/3/"
     const val API_KEY = "509d1a5ea9e6f3d82518365bfff8e014"
     const val LANGUAGE = "es-ES"
+    const val SORT_BY = "popularity.desc"
+    const val ADULT = "false"
 
     init {
         initService()

@@ -1,4 +1,4 @@
-package com.example.tmdb_app.views.genres
+package com.example.tmdb_app.views.movies
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,19 +10,17 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
-import com.example.tmdb_app.R
-import com.example.tmdb_app.adapters.GenresAdapter
-import com.example.tmdb_app.databinding.FragmentGenresBinding
+import com.example.tmdb_app.adapters.MoviesAdapter
+import com.example.tmdb_app.databinding.FragmentMoviesBinding
 import kotlinx.coroutines.launch
 
-class GenresFragment : Fragment() {
+class MoviesFragment : Fragment() {
 
-    private val viewModel: GenresViewModel by activityViewModels()
+    private val viewModel: MoviesViewModel by activityViewModels()
     private lateinit var progressBar: ProgressBar
-    private lateinit var adapter: GenresAdapter
+    private lateinit var adapter: MoviesAdapter
 
-    private var _binding: FragmentGenresBinding? = null
+    private var _binding: FragmentMoviesBinding? = null
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -31,15 +29,17 @@ class GenresFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentGenresBinding.inflate(inflater, container, false)
+    ): View {
+        _binding = FragmentMoviesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        progressBar = binding.genresProgressBar
+        val genreId = arguments?.getInt("genreId") ?: 0
+
+        progressBar = binding.moviesProgressBar
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -54,21 +54,21 @@ class GenresFragment : Fragment() {
                 }
 
                 launch {
-                    viewModel.genresList.collect { genres ->
-                        adapter.updateData(genres)
+                    viewModel.moviesList.collect { movies ->
+                        adapter.updateData(movies)
                     }
                 }
             }
         }
 
-        adapter = GenresAdapter{
-            val action = GenresFragmentDirections.actionGenresFragmentToMoviesFragment(it.id)
-            findNavController().navigate(action)
+        adapter = MoviesAdapter{ movie ->
+//            val action = MoviesFragmentDirections.actionMoviesFragmentToMovieDetailsFragment(movie)
+//            findNavController().navigate(action)
         }
 
-        val recyclerView = binding.genresRecyclerView
+        val recyclerView = binding.moviesRecyclerView
         recyclerView.adapter = adapter
 
-        viewModel.getGenres()
+        viewModel.getMoviesByGenre(genreId)
     }
 }

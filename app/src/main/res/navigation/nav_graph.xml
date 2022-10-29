@@ -9,5 +9,18 @@
         android:id="@+id/genresFragment"
         android:name="com.example.tmdb_app.views.genres.GenresFragment"
         android:label="fragment_genres"
-        tools:layout="@layout/fragment_genres" />
+        tools:layout="@layout/fragment_genres" >
+        <action
+            android:id="@+id/action_genresFragment_to_moviesFragment"
+            app:destination="@id/moviesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/moviesFragment"
+        android:name="com.example.tmdb_app.views.movies.MoviesFragment"
+        android:label="fragment_movies"
+        tools:layout="@layout/fragment_movies" >
+        <argument
+            android:name="genreId"
+            app:argType="integer" />
+    </fragment>
 </navigation>
