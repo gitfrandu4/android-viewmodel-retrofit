@@ -1,5 +1,15 @@
 # ViewModel & Retrofit
 
+This is a sample project to show how to use ViewModel and Retrofit together.
+
+* [Sincronía y Asíncronía](#sincronía-y-asincronía)
+* [Programación Reactiva](#programación-reactiva)
+* [ViewModel](#viewmodel)
+* [Arquitectura de una App](#viewmodel)
+* [LifeData vs StateFlow](#livedata-vs-stateflow)
+* [Retrofit](#retrofit)
+* [Práctica](#práctica)
+
 ## Sincronía y Asincronía
 
 <img src="./img/async1.png" width="400">
