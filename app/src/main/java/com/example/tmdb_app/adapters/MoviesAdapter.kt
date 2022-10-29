@@ -9,13 +9,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tmdb_app.R
-import com.example.tmdb_app.models.Genres
-import com.example.tmdb_app.models.Movie
+import com.example.tmdb_app.models.MovieResume
 import com.example.tmdb_app.models.Movies
 
-class MoviesAdapter (val onClick: (Movie) -> Unit): RecyclerView.Adapter<MoviesAdapter.ViewHolder>(){
+class MoviesAdapter (val onClick: (MovieResume) -> Unit): RecyclerView.Adapter<MoviesAdapter.ViewHolder>(){
 
-    private var data = mutableListOf<Movie>()
+    private var data = mutableListOf<MovieResume>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_movies, parent, false)
@@ -44,7 +43,7 @@ class MoviesAdapter (val onClick: (Movie) -> Unit): RecyclerView.Adapter<MoviesA
         private val movieAverageRating: TextView = itemView.findViewById(R.id.movieAverageRate)
 
 
-        fun bind(genre: Movie) {
+        fun bind(genre: MovieResume) {
             this.movieTitle.text = genre.title
             this.movieReleaseDate.text = genre.release_date
             this.movieAverageRating.text = genre.vote_average.toString()

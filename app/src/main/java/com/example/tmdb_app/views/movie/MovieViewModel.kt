@@ -1,4 +1,4 @@
-package com.example.tmdb_app.views.movies
+package com.example.tmdb_app.views.movie
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -6,22 +6,23 @@ import com.example.tmdb_app.models.Genres
 import com.example.tmdb_app.remote.ApiService
 import kotlinx.coroutines.flow.MutableStateFlow
 import androidx.lifecycle.viewModelScope
+import com.example.tmdb_app.models.Movie
 import com.example.tmdb_app.models.Movies
 import kotlinx.coroutines.launch
 
-class MoviesViewModel: ViewModel() {
-    val moviesList = MutableStateFlow(Movies())
+class MovieViewModel: ViewModel() {
+    val movie = MutableStateFlow(Movie())
     val loading = MutableStateFlow(false)
 
-    fun getMoviesByGenre(genreId: Int) {
+    fun getMovie(movieId: Int) {
         loading.value = true
         viewModelScope.launch {
-            val response = ApiService.api.getMovies(genreId = genreId)
+            val response = ApiService.api.getMovie(movieId = movieId)
             if (response.isSuccessful) {
-                moviesList.value = response.body() ?: Movies()
-                Log.v("MoviesViewModel", "Movies: ${moviesList.value}")
+                movie.value = response.body() ?: Movie()
+                Log.v("MovieViewModel", "Movie: ${movie.value}")
             } else {
-                Log.e("MoviesViewModel", "Error: ${response.errorBody()}")
+                Log.e("MovieViewModel", "Error: ${response.errorBody()}")
             }
             loading.value = false
         }

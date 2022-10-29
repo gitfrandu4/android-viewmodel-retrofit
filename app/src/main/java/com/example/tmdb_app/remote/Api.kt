@@ -1,9 +1,11 @@
 package com.example.tmdb_app.remote
 
 import com.example.tmdb_app.models.Genres
+import com.example.tmdb_app.models.Movie
 import com.example.tmdb_app.models.Movies
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface Api {
@@ -24,4 +26,11 @@ interface Api {
         @Query("page") page: Int = 1,
         @Query("with_genres") genreId: Int
     ): Response<Movies>
+
+    @GET("movie/{movie_id}")
+    suspend fun getMovie(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String = ApiService.API_KEY,
+        @Query("language") language: String = ApiService.LANGUAGE
+    ): Response<Movie>
 }

@@ -22,5 +22,17 @@
         <argument
             android:name="genreId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_moviesFragment_to_movieFragment"
+            app:destination="@id/movieFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieFragment"
+        android:name="com.example.tmdb_app.views.movie.MovieFragment"
+        android:label="fragment_movie"
+        tools:layout="@layout/fragment_movie" >
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
     </fragment>
 </navigation>

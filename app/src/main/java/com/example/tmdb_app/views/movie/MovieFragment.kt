@@ -1,4 +1,4 @@
-package com.example.tmdb_app.views.movies
+package com.example.tmdb_app.views.movie
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,18 +10,17 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
-import com.example.tmdb_app.adapters.MoviesAdapter
-import com.example.tmdb_app.databinding.FragmentMoviesBinding
+import com.bumptech.glide.Glide
+import com.example.tmdb_app.databinding.FragmentMovieBinding
 import kotlinx.coroutines.launch
 
-class MoviesFragment : Fragment() {
+class MovieFragment : Fragment() {
 
-    private val viewModel: MoviesViewModel by activityViewModels()
+    private val viewModel: MovieViewModel by activityViewModels()
     private lateinit var progressBar: ProgressBar
-    private lateinit var adapter: MoviesAdapter
 
-    private var _binding: FragmentMoviesBinding? = null
+    private var _binding: FragmentMovieBinding? = null
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -31,16 +30,16 @@ class MoviesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMoviesBinding.inflate(inflater, container, false)
+        _binding = FragmentMovieBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val genreId = arguments?.getInt("genreId") ?: 0
+        val movieId = arguments?.getInt("movieId") ?: 0
 
-        progressBar = binding.moviesProgressBar
+        progressBar = binding.progressBar
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -55,21 +54,19 @@ class MoviesFragment : Fragment() {
                 }
 
                 launch {
-                    viewModel.moviesList.collect { movies ->
-                        adapter.updateData(movies)
+                    viewModel.movie.collect { movie ->
+                        binding.movieTitle.text = movie.title
+                        binding.movieOverview.text = movie.overview
+                        binding.movieReleaseDate.text = movie.release_date
+
+                        Glide.with(this@MovieFragment)
+                            .load("https://image.tmdb.org/t/p/w500${movie.poster_path}")
+                            .into(binding.imageView)
                     }
                 }
             }
         }
 
-        adapter = MoviesAdapter{ movie ->
-            val action = MoviesFragmentDirections.actionMoviesFragmentToMovieFragment(movie.id)
-            findNavController().navigate(action)
-        }
-
-        val recyclerView = binding.moviesRecyclerView
-        recyclerView.adapter = adapter
-
-        viewModel.getMoviesByGenre(genreId)
+        viewModel.getMovie(movieId)
     }
 }
