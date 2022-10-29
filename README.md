@@ -103,7 +103,8 @@ parseando automáticamente la respuesta a un tipo de datos.
 
 # Práctica
 
-Vamos a utilizar la API de TheMovieDB para obtener géneros de películas en una app. El resultado de la app
-será el siguiente.
+Vamos a utilizar la API de TheMovieDB para obtener géneros de películas en una app. 
 
-<img src="./img/app.png" width="400">
+Resultado: 
+
+| <img src="./img/Screenshot_1.png" width="200"> | <img src="./img/Screenshot_2.png" width="200"> | <img src="./img/Screenshot_3.png" width="200"> |
